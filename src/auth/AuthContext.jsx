@@ -1,6 +1,9 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { createSearchParams } from 'react-router-dom'
 
+// Auth is managed via React Context (NOT Redux). Provides: student, signIn, signOut, requireSignIn.
+// signIn() is currently MOCKED — it accepts any profile and fills in defaults.
+// Consumed by: Layout, RequireAuth, SignIn, and (eventually) DoctorDetail, BookingForm.
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {

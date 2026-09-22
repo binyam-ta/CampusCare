@@ -1,3 +1,10 @@
+// Thin fetch wrapper for the json-server mock API.
+// Provides: fetchDoctors, fetchDoctor, fetchSlots, fetchAppointments,
+//           createAppointment, cancelAppointment.
+//
+// NOTE: Not imported by any component yet — the page components are still
+// scaffolds. When built out, DoctorDirectory/DoctorDetail will use the doctor
+// functions, and BookingForm/AppointmentHistory will use the appointment ones.
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 
 async function request(path, options = {}) {

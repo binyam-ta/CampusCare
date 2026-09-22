@@ -13,6 +13,9 @@ export default function DoctorDetail() {
         <div>
           <p>This is the doctor detail screen for doctor id: <strong>{id}</strong></p>
           <p style={{ marginTop: '1rem' }}>
+            {/* Booking data (doctorId, slotId, slotDateTime) is passed to BookingForm
+                via React Router ROUTE STATE, not Redux. BookingForm reads it with
+                useLocation().state. This keeps transient selection data out of the global store. */}
             <Link
               to="/booking"
               state={{ doctorId: id, slotId: 'demo-slot', slotDateTime: new Date().toISOString() }}

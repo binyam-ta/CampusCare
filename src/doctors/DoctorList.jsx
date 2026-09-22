@@ -1,5 +1,8 @@
 import DoctorCard from './DoctorCard.jsx'
 
+// `doctors` prop: array of doctor objects.
+// Will be passed by DoctorDirectory after it fetches from the API and filters.
+// Not imported/rendered by any parent yet — DoctorDirectory still uses placeholder UI.
 export default function DoctorList({ doctors }) {
   if (!doctors || doctors.length === 0) {
     return (

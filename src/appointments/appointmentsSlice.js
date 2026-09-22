@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+// Redux slice for appointment data. Registered in store.js as state.appointments.
+// Provides sync actions: appointmentAdded, appointmentCancelled, appointmentsLoaded.
+// NOTE: These actions are exported but NOT dispatched by any component yet —
+// the booking/history pages are still scaffolds. When built out:
+//   - BookingForm will dispatch appointmentAdded
+//   - AppointmentHistory will dispatch appointmentsLoaded (after fetching from API)
 const initialState = {
   items: [],
   status: 'idle',

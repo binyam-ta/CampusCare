@@ -3,6 +3,8 @@ import { useLocation, useNavigate, Link } from 'react-router-dom'
 export default function BookingForm() {
   const location = useLocation()
   const navigate = useNavigate()
+  // These values arrive via React Router ROUTE STATE, passed by DoctorDetail
+  // when the user clicks the booking link: <Link to="/booking" state={{ doctorId, slotId, slotDateTime }}>
   const { doctorId, slotId, slotDateTime } = location.state || {}
 
   const handleConfirm = () => {

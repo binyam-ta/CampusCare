@@ -2,6 +2,8 @@ import { useLocation, Link } from 'react-router-dom'
 
 export default function BookingConfirmation() {
   const location = useLocation()
+  // appointmentId arrives via ROUTE STATE, passed by BookingForm after
+  // the user confirms. BookingForm does: navigate('/booking/confirmation', { state: { appointmentId, appointment } })
   const { appointmentId } = location.state || {}
 
   return (
