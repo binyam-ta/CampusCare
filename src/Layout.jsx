@@ -1,8 +1,8 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navbar.jsx'
+import { Footer } from './Footer.jsx'
 
 export default function Layout() {
-
   return (
     <div className="layout">
       <header className="layout-header">
@@ -11,9 +11,7 @@ export default function Layout() {
       <main className="layout-main">
         <Outlet />
       </main>
-      <footer className="layout-footer">
-        Campus Health Center · Student Clinic Booking Service
-      </footer>
+      <Footer />
     </div>
   )
 }
