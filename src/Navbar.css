@@ -21,10 +21,18 @@
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: white;
+}
+
+.brand-icon {
+  font-size: 1.3rem;
+  /* color: #9ee8e5; */
 }
 
 .burger-menu {
@@ -83,7 +91,10 @@
 }
 
 .menu a {
-  padding: 0.9rem 0.75rem;
+   padding: 0.9rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   color: #e6fffe;
   font-size: 1rem;
   font-weight: 500;
@@ -92,6 +103,12 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.menu a svg {
+  width: 1.1rem;
+  text-align: center;
+}
+
+  
 .menu a:hover {
   color: #ffffff;
   background-color: #075960;

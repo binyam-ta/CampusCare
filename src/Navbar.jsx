@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useAuth } from './auth/AuthContext.jsx'
 import { NavLink } from 'react-router-dom'
 import './navbar.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStarOfLife, faHouse, faUserDoctor, faCalendarCheck, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 
 
 export function Navbar() {
@@ -23,7 +25,10 @@ export function Navbar() {
     return (
         <div className="navbar-container">
             <nav className="navbar">
-                <div className="brand">CampusCare</div>
+                <div className="brand">
+                    <FontAwesomeIcon icon={faStarOfLife} className="brand-icon" />
+                    <span>CampusCare</span>
+                </div>
                 <button
                     className={`burger-menu ${isMenuOpen ? 'is-open' : ''}`} onClick={toggleMenu}
                     aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -38,9 +43,20 @@ export function Navbar() {
                 On tablet/desktop it becomes a normal horizontal navigation.
                 */}
                 <div className={`menu ${isMenuOpen ? 'menu-open' : ''}`}>
-                    <NavLink to="/" end onClick={closeMenu}>Home</NavLink>
-                    <NavLink to="/doctors" onClick={closeMenu}> Doctors</NavLink>
-                    <NavLink to="/appointments" onClick={closeMenu}> My Appointments</NavLink>
+                    <NavLink to="/" end onClick={closeMenu}>
+                        <FontAwesomeIcon icon={faHouse} />
+                        <span>Home</span>
+                    </NavLink>
+
+                    <NavLink to="/doctors" onClick={closeMenu}>
+                        <FontAwesomeIcon icon={faUserDoctor} />
+                        <span>Doctors</span>
+                    </NavLink>
+
+                    <NavLink to="/appointments" onClick={closeMenu}>
+                        <FontAwesomeIcon icon={faCalendarCheck} />
+                        <span>My Appointments</span>
+                    </NavLink>
                     {student ? (
                         <NavLink to="/"
                             onClick={(e) => {
@@ -49,9 +65,13 @@ export function Navbar() {
                                 closeMenu()
                             }}
                         >
-                            Sign out
+                            <FontAwesomeIcon icon={faRightFromBracket} />
+                            <span>Sign out</span>
                         </NavLink>) : (
-                        <NavLink to="/signin" onClick={closeMenu}>Sign in </NavLink>
+                        <NavLink to="/signin" onClick={closeMenu}>
+                            <FontAwesomeIcon icon={faRightToBracket} />
+                            <span>Sign in</span>
+                        </NavLink>
                     )}
                 </div>
             </nav>
