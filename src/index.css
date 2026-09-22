@@ -11,6 +11,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* Make width and height calculations predictable. */
 * {
   box-sizing: border-box;
 }
@@ -30,53 +32,30 @@ button {
   cursor: pointer;
 }
 
+
+/*  PAGE LAYOUT */
+
 .layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+
 .layout-header {
-  background: #353737;
-  color: white;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.layout-header .brand {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.layout-nav {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.layout-nav a {
-  padding: 0.35rem 0.25rem;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.15s ease;
-}
-
-.layout-nav a.active,
-.layout-nav a:hover {
-  border-color: #a7f3d0;
+  width: 100%;
 }
 
 .layout-main {
   flex: 1;
-  padding: 2rem;
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  width: 100%;
+  padding: 2rem;
 }
 
+
+/* FOOTER */
 .layout-footer {
   background: #1f2937;
   color: #e5e7eb;
@@ -84,6 +63,9 @@ button {
   text-align: center;
   font-size: 0.875rem;
 }
+
+
+/* GENERAL PAGE COMPONENTS */
 
 .screen {
   background: white;
