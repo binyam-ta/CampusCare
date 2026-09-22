@@ -17,9 +17,17 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: #F3F8F7;
 }
 
 a {
@@ -68,13 +76,14 @@ button {
 /* GENERAL PAGE COMPONENTS */
 
 .screen {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  /* background: white; */
+  /* border-radius: 12px; */
+  /* padding: 2rem; */
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); */
 }
 
-.screen-title {
+/* .screen-title {
   margin: 0 0 1rem 0;
   font-size: 1.75rem;
   font-weight: 700;
@@ -96,7 +105,7 @@ button {
   color: #9ca3af;
   padding: 2rem;
   text-align: center;
-}
+} */
 
 .btn {
   display: inline-block;
@@ -124,4 +133,18 @@ button {
 
 .btn-secondary:hover {
   background: #d1d5db;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  .layout-main {
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .layout-main {
+    padding: 2rem;
+  }
 }
