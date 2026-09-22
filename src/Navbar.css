@@ -8,7 +8,7 @@
 
 .navbar {
   width: 100%;
-  min-height: 5rem;
+  min-height: 3.75rem;;
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -36,8 +36,8 @@
 }
 
 .burger-menu {
-  width: 2.5rem;
-  height: 2.25rem;
+  width: 1.75rem;
+  height: 1.5rem;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -49,14 +49,14 @@
 
 .burger-bar {
   width: 100%;
-  height: 0.25rem;
+  height: 0.18rem;
   background-color: white;
   border-radius: 999px;
   transition: transform 0.25s ease, opacity 0.2s ease;
 }
 
 .burger-menu.is-open .burger-bar:nth-child(1) {
-  transform: translateY(1rem) rotate(45deg);
+  transform: translateY(0.66rem) rotate(45deg);
 }
 
 .burger-menu.is-open .burger-bar:nth-child(2) {
@@ -64,7 +64,7 @@
 }
 
 .burger-menu.is-open .burger-bar:nth-child(3) {
-  transform: translateY(-1rem) rotate(-45deg);
+  transform: translateY(-0.66rem) rotate(-45deg);
 }
 
 .menu {

@@ -27,7 +27,14 @@ export default function Home() {
           </div>
 
           <div className="specialists-section">
-            <h2>Specialists</h2>
+            <div className="section-header">
+              <h2>Specialists</h2>
+
+              <Link to="/doctors" className="see-all">
+                See all
+                <FontAwesomeIcon icon={faArrowRight} />
+              </Link>
+            </div>
             <div className="specialists-row">
               <div className="specialist-card">
                 <FontAwesomeIcon icon={faHeadSideVirus} className="specialist-icon" />
