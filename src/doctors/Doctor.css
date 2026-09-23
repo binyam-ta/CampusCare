@@ -1,9 +1,15 @@
+:root {
+    --color-rating: #d6a62c;
+}
+
+/* Doctor Filter
+   ============= */
 
 .search-bar {
     display: flex;
     width: 100%;
-    margin: 1.5rem 0;
     gap: 0.5rem;
+    margin: 1.5rem 0;
 }
 
 .search-bar input {
@@ -11,16 +17,17 @@
     min-width: 0;
     height: 44px;
     padding: 0 0.9rem;
-    border: 1px solid #d5dddd;
-    border-radius: 8px;
     color: var(--color-dark);
     font-size: 0.9rem;
+    border: 1px solid #d5dddd;
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .search-bar input::placeholder {
     color: #9aa5a7;
-    font-style: italic;
     font-size: 0.95rem;
+    font-style: italic;
 }
 
 .search-bar input:focus {
@@ -30,13 +37,13 @@
 }
 
 .search-bar button {
-    background: #086C73;
-    color: white;
-    border: none;
     padding: 8px 12px;
+    color: #fff;
+    background: var(--color-main);
+    border: none;
     border-radius: 7px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .search-bar button:hover {
@@ -49,24 +56,213 @@
 
 
 .Filter-buttons {
-    margin: 1rem 0;
     display: flex;
-    gap: 0.4rem;
     flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
 }
 
 .Filter-buttons .btn {
     padding: 0.4rem 0.7rem;
     font-size: 0.8rem;
-    border-radius: 6px;
     line-height: 1.2;
+    border-radius: 6px;
+}
+
+
+/* Doctor List
+   ============= */
+
+.doctor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.doctors-available {
+    margin-bottom: 1rem;
+}
+
+
+/*  Doctor Card
+   ============== */
+
+.doctor-card-link {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.doctor-card {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0.7rem;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e4ebea;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: 0.2s ease,
+}
+
+.doctor-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.doctor-card:focus-visible {
+    outline: 2px solid var(--color-main);
+    outline-offset: 2px;
+}
+
+
+/* Doctor Image */
+
+.doctor-avatar {
+    flex: 0 0 64px;
+    width: 640px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #e0f2fe;
+}
+
+.doctor-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+
+/* Doctor Information */
+
+.doctor-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.doctor-info h3 {
+    margin: 0 0 0.25rem;
+    color: var(--color-main);
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.doctor-info p {
+    margin: 0.2rem 0;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.doctor-department {
+    margin: 0;
+    color: var(--color-main);
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.doctor-specialization {
+    margin: 0.15rem 0 0;
+    color: #6b7280;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.doctor-rating {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.4rem;
+    line-height: 1;
+}
+
+.doctor-stars {
+    color: var(--color-rating);
+    font-size: 0.8rem;
+}
+
+.doctor-rating-value {
+    color: var(--color-rating);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.doctor-reviews {
+    color: var(--color-rating);
+    font-size: 0.7rem;
+}
+
+.doctor-experience {
+    color: var(--color-muted);
+}
+
+.doctor-experience span {
+    color: #a0aaac;
+    margin: 0 0.2rem;
+}
+
+
+/* DoctorDirectory Test Links */
+
+.doctor-test-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+
+/* Larger Mobile */
+
+@media (min-width: 400px) {
+    .doctor-card {
+        gap: 0.9rem;
+        padding: 0.85rem;
+    }
+
+    .doctor-avatar {
+        flex: 0 0 72px;
+        width: 72px;
+        height: 90px;
+    }
+
+    .doctor-info h3 {
+        font-size: 1rem;
+    }
+
+    .doctor-department,
+    .doctor-specialization {
+        font-size: 0.75rem;
+    }
+
+    .doctor-rating-value {
+        font-size: 0.8rem;
+    }
+
+    .doctor-reviews {
+        font-size: 0.75rem;
+    }
+
+    .doctor-stars {
+        font-size: 0.9rem;
+    }
 }
 
 
 /* Tablet */
-@media (min-width: 600px) {
-    /* Filter-buttons for Tablet / desktop */
 
+@media (min-width: 600px) {
     .Filter-buttons {
         gap: 0.5rem;
         margin: 1.25rem 0;
@@ -75,5 +271,49 @@
     .Filter-buttons .btn {
         padding: 0.5rem 0.9rem;
         font-size: 0.9rem;
+    }
+}
+
+
+/* Desktop */
+
+@media (min-width: 768px) {
+    .doctor-list {
+        gap: 0.75rem;
+    }
+
+    .doctor-card {
+        padding: 1rem;
+    }
+
+    .doctor-avatar {
+        flex-basis: 80px;
+        width: 80px;
+        height: 100px;
+    }
+
+    .doctor-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .doctor-department,
+    .doctor-specialization,
+    .doctor-info p {
+        font-size: 0.9rem;
+    }
+
+    .doctor-test-links {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    .doctor-card,
+    .search-bar button {
+        transition: none;
     }
 }

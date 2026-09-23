@@ -225,7 +225,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.doctor-img {
+.doctor-recommend-img {
     width: 80px;
     height: 80px;
     flex-shrink: 0;
@@ -340,7 +340,7 @@
         min-height: 150px;
     }
 
-    .doctor-card {
+    /* .doctor-card {
         padding: 1.25rem;
     }
 
@@ -355,5 +355,5 @@
 
     .doctor-info p {
         font-size: 0.9rem;
-    }
+    } */
 }

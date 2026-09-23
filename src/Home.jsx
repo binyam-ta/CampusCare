@@ -58,7 +58,7 @@ export default function Home() {
           <div className="recommended-section">
             <h2>Recommended for You</h2>
             <div className="doctor-card">
-              <img src={recommendedImg} alt="Doctor" className="doctor-img" />
+              <img src={recommendedImg} alt="Doctor" className="doctor-recommend-img" />
               <div className="doctor-info">
                 <h3>Dr. Sarah Johnson</h3>
                 <p>Dermatologist</p>

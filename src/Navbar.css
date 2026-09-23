@@ -55,6 +55,9 @@
   transition: transform 0.25s ease, opacity 0.2s ease;
 }
 
+
+/* Animation for menu-open */
+
 .burger-menu.is-open .burger-bar:nth-child(1) {
   transform: translateY(0.66rem) rotate(45deg);
 }

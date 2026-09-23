@@ -1,32 +1,52 @@
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
-export default function DoctorCard({ doctor }) {
+// export default function DoctorCard({ doctor }) {
+//   return (
+//     
+//   )
+// }
+import { Link } from 'react-router-dom'
+import './Doctor.css'
+import drAbebeImg from '../assets/images/dr-abebe-kebede.jpg'
+
+export function DoctorCard() {
   return (
-    <Link to={`/doctors/${doctor.id}`} style={{ display: 'block' }}>
-      <div style={{
-        border: '1px solid #e5e7eb',
-        borderRadius: '10px',
-        padding: '1.25rem',
-        background: '#fff',
-        transition: 'box-shadow 0.15s ease'
-      }}>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: '50%',
-            background: '#e0f2fe',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#0369a1', fontWeight: 700
-          }}>
-            {doctor.name ? doctor.name.split(' ').map(n => n[0]).join('').slice(0, 2) : 'DR'}
-          </div>
-          <div>
-            <div style={{ fontWeight: 600, color: '#111827' }}>{doctor.name}</div>
-            <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-              {doctor.department} · {doctor.specialization}
-            </div>
-          </div>
+    <Link to="/doctors/1" className="doctor-card-link">
+      <article className="doctor-card">
+
+        <div className="doctor-avatar">
+          <img
+            className="doctor-img"
+            src={drAbebeImg}
+            alt="Dr. Abebe Kebede"
+          />
         </div>
-      </div>
+
+        <div className="doctor-info">
+          <h3>Dr. Abebe Kebede</h3>
+
+          <p className="doctor-department">
+            Cardiology
+          </p>
+
+          <p className="doctor-specialization">
+            Interventional Cardiology
+          </p>
+
+          <div className="doctor-rating">
+            <span className="doctor-stars">★</span>
+            <span className="doctor-rating-value">4.8</span>
+            <span className="doctor-reviews">
+              (124 reviews)
+            </span>
+          </div>
+
+          <p className="doctor-experience">
+            Cardiology <span>•</span> 8 years
+          </p>
+        </div>
+
+      </article>
     </Link>
   )
 }
