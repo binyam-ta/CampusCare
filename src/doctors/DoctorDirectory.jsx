@@ -1,5 +1,6 @@
 import { useSearchParams, Link } from 'react-router-dom'
 import DepartmentFilter from './DepartmentFilter.jsx'
+import {DoctorCard} from './DoctorCard';
 
 const DEPARTMENTS = ['General Medicine', 'Psychiatry', 'Dermatology', 'Sports Medicine']
 
@@ -31,6 +32,7 @@ export default function DoctorDirectory() {
         <div>
           <p>This is the doctor directory screen.</p>
           <p style={{ marginTop: '1rem' }}>
+            <DoctorCard/>
             <Link to="/doctors/dr-1" className="btn btn-primary" style={{ marginRight: '0.5rem' }}>Open /doctors/dr-1</Link>
             <Link to="/doctors/dr-99" className="btn btn-secondary">Open /doctors/dr-99</Link>
           </p>
