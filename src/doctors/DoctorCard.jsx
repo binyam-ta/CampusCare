@@ -11,7 +11,7 @@ import drAbebeImg from '../assets/images/dr-abebe-kebede.jpg'
 
 export function DoctorCard() {
   return (
-    <Link to="/doctors/1" className="doctor-card-link">
+    <Link to="/doctors/dr-3" className="doctor-card-link">
       <article className="doctor-card">
 
         <div className="doctor-avatar">

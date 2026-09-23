@@ -81,6 +81,9 @@
 
 .doctors-available {
     margin-bottom: 1rem;
+    color: #15343A;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 
@@ -124,7 +127,7 @@
 
 .doctor-avatar {
     flex: 0 0 64px;
-    width: 640px;
+    width: 64px;
     height: 80px;
     overflow: hidden;
     border-radius: 8px;
@@ -149,14 +152,19 @@
 
 .doctor-info h3 {
     margin: 0 0 0.25rem;
-    color: var(--color-main);
+    /* color: var(--color-main);
+    font-size: 0.9rem;
+    line-height: 1.3; */
+    color: #111827;
     font-size: 0.9rem;
     line-height: 1.3;
+    font-weight: 600;
+    overflow-wrap: anywhere;
 }
 
 .doctor-info p {
     margin: 0.2rem 0;
-    color: var(--color-muted);
+    /* color: var(--color-muted); */
     font-size: 0.8rem;
     line-height: 1.4;
 }
@@ -173,7 +181,7 @@
 .doctor-specialization {
     margin: 0.15rem 0 0;
     color: #6b7280;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     line-height: 1.4;
     overflow-wrap: anywhere;
 }
@@ -263,6 +271,10 @@
 /* Tablet */
 
 @media (min-width: 600px) {
+    .doctors-available {
+        font-size: 20px;
+    }
+
     .Filter-buttons {
         gap: 0.5rem;
         margin: 1.25rem 0;
@@ -312,6 +324,7 @@
 /* Accessibility */
 
 @media (prefers-reduced-motion: reduce) {
+
     .doctor-card,
     .search-bar button {
         transition: none;

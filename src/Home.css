@@ -233,7 +233,7 @@
     object-fit: cover;
 }
 
-.doctor-info {
+/* .doctor-info {
     min-width: 0;
 }
 
@@ -248,7 +248,7 @@
     color: var(--color-muted);
     font-size: 0.8rem;
     line-height: 1.4;
-}
+} */
 
 
 /* Tablet and up */

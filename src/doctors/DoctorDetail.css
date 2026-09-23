@@ -1,0 +1,414 @@
+.dd {
+    --dd-main: var(--color-main, #086c73);
+    --dd-main-soft: #e3f0ef;
+    --dd-tile: #edf4f3;
+    --dd-ink: #15343a;
+    --dd-muted: #5f7175;
+    --dd-line: #d5dddd;
+    --dd-rating: var(--color-rating, #d6a62c);
+    color: var(--dd-ink);
+}
+
+.dd button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.dd :is(button, a):focus-visible {
+    outline: 2px solid var(--dd-main);
+    outline-offset: 2px;
+}
+
+.dd-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    color: var(--dd-main);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.dd-layout {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.dd-h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dd-ink);
+}
+
+/* Hero */
+
+.dd-hero {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+}
+
+.dd-photo {
+    flex: 0 0 112px;
+    width: 112px;
+    height: 140px;
+    border-radius: 14px;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--dd-main-soft);
+}
+
+.dd-hero-text {
+    min-width: 0;
+}
+
+.dd-name {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.dd-dept {
+    margin: 0.25rem 0 0.4rem;
+    color: var(--dd-main);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.dd-meta {
+    margin: 0;
+    color: var(--dd-muted);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.dd-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0.55rem 0 0;
+    font-size: 0.85rem;
+    color: var(--dd-rating);
+}
+
+.dd-rating strong {
+    font-weight: 700;
+}
+
+.dd-rating span {
+    color: var(--dd-muted);
+}
+
+/* Stat tiles */
+
+.dd-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dd-stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.75rem 0.4rem;
+    text-align: center;
+    background: var(--dd-tile);
+    border-radius: 12px;
+}
+
+.dd-stats svg {
+    color: var(--dd-main);
+}
+
+.dd-stats strong {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.dd-stats span {
+    color: var(--dd-muted);
+    font-size: 0.72rem;
+}
+
+/* About */
+
+.dd-block {
+    margin-top: 1.5rem;
+}
+
+.dd-about {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--dd-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.dd-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dd-chips li {
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    color: var(--dd-main);
+    background: var(--dd-main-soft);
+    border-radius: 999px;
+}
+
+.dd-hospital {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.9rem 0 0;
+    color: var(--dd-muted);
+    font-size: 0.85rem;
+}
+
+/* Booking panel */
+
+.dd-modes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+    margin-bottom: 0.9rem;
+    padding: 0.25rem;
+    background: var(--dd-tile);
+    border-radius: 12px;
+}
+
+.dd-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 40px;
+    color: var(--dd-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dd-mode.is-active {
+    color: var(--dd-main);
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.dd-days {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0 -1rem;
+    padding: 0.15rem 1rem 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+}
+
+.dd-days::-webkit-scrollbar {
+    display: none;
+}
+
+.dd-day {
+    flex: 0 0 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.6rem 0;
+    color: var(--dd-ink);
+    background: #fff;
+    border: 1px solid var(--dd-line);
+    border-radius: 12px;
+    scroll-snap-align: start;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.dd-day span {
+    font-size: 0.72rem;
+    color: var(--dd-muted);
+}
+
+.dd-day strong {
+    font-size: 1.15rem;
+}
+
+.dd-day.is-active {
+    color: #fff;
+    background: var(--dd-main);
+    border-color: var(--dd-main);
+}
+
+.dd-day.is-active span {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.dd-slot-caption {
+    margin: 0.5rem 0 0.75rem;
+    color: var(--dd-muted);
+    font-size: 0.82rem;
+}
+
+.dd-times {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.dd-time {
+    min-height: 44px;
+    color: var(--dd-ink);
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #fff;
+    border: 1px solid var(--dd-line);
+    border-radius: 10px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.dd-time:hover:not(:disabled) {
+    border-color: var(--dd-main);
+}
+
+.dd-time.is-active {
+    color: var(--dd-main);
+    background: var(--dd-main-soft);
+    border-color: var(--dd-main);
+}
+
+.dd-time:disabled {
+    color: #a7b2b4;
+    background: #f4f6f6;
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+/* Summary and CTA */
+
+.dd-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding: 0.8rem 1rem;
+    background: #fff;
+    border: 1px solid var(--dd-line);
+    border-radius: 12px;
+}
+
+.dd-summary-label {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--dd-muted);
+    font-size: 0.75rem;
+}
+
+.dd-summary-price {
+    font-size: 1.15rem;
+    white-space: nowrap;
+}
+
+.dd-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    margin-top: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 14px;
+}
+
+.dd-cta:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Small phones */
+
+@media (max-width: 359px) {
+    .dd-photo {
+        flex-basis: 92px;
+        width: 92px;
+        height: 118px;
+    }
+
+    .dd-times {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Tablet */
+
+@media (min-width: 600px) {
+    .dd-photo {
+        flex-basis: 150px;
+        width: 150px;
+        height: 185px;
+    }
+
+    .dd-name {
+        font-size: 1.6rem;
+    }
+
+    .dd-times {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .dd-days {
+        margin: 0;
+        padding-inline: 0;
+    }
+}
+
+/* Desktop: profile left, booking panel right and sticky */
+
+@media (min-width: 900px) {
+    .dd-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .dd-booking {
+        position: sticky;
+        top: 1rem;
+        padding: 1.25rem;
+        background: #fff;
+        border: 1px solid #e4ebea;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .dd-times {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dd-mode,
+    .dd-day,
+    .dd-time {
+        transition: none;
+    }
+}
