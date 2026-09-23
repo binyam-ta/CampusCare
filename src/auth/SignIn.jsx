@@ -1,9 +1,21 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams, Navigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStethoscope, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faStarOfLife, faEye, faEyeSlash, faShieldHalved } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from './AuthContext.jsx'
+// TEMPORARY: swap for your patient + doctor/nurse photo, e.g. '../assets/images/signin-care.jpg'
+import heroImage from '../assets/images/login-male3.jpg'
 import './SignIn.css'
+
+// Replace with your real logo image when you have one
+function Logo() {
+  return (
+    <div className="auth-logo">
+      <FontAwesomeIcon icon={faStarOfLife} />
+      <span>CampusCare</span>
+    </div>
+  )
+}
 
 export default function SignIn() {
   const [searchParams] = useSearchParams()
@@ -22,7 +34,7 @@ export default function SignIn() {
       ? requested
       : '/appointments'
 
-  // Already signed in: <Navigate> redirects safely (calling navigate() during render is not allowed)
+  // Already signed in: <Navigate> redirects safely (navigate() can't be called during render)
   if (student) {
     return <Navigate to={redirectTo} replace />
   }
@@ -42,65 +54,102 @@ export default function SignIn() {
 
   return (
     <section className="screen auth">
-      <div className="auth-logo">
-        <FontAwesomeIcon icon={faStethoscope} />
-      </div>
-      <h1 className="auth-title">Welcome back</h1>
-      <p className="auth-subtitle">
-        {requested
-          ? 'Sign in to continue.'
-          : 'Sign in to book and manage your appointments.'}
-      </p>
-
-      <form className="auth-card" onSubmit={handleSubmit} noValidate>
-        <div className="auth-field">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={!!errors.email}
-          />
-          {errors.email && <p className="auth-error" role="alert">{errors.email}</p>}
-        </div>
-
-        <div className="auth-field">
-          <label htmlFor="password">Password</label>
-          <div className="auth-password">
-            <input
-              id="password"
-              type={showPassword ? 'text' : 'password'}
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              aria-invalid={!!errors.password}
-            />
-            <button
-              type="button"
-              className="auth-toggle"
-              onClick={() => setShowPassword((s) => !s)}
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-            >
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </button>
+      <div className="auth-shell">
+        {/* Left: image panel (hidden on phones and tablets) */}
+        <aside className="auth-hero">
+          <img className="auth-hero-img" src={heroImage} alt="" />
+          <div className="auth-hero-overlay" />
+          <div className="auth-hero-top">
+            <Logo />
           </div>
-          {errors.password && <p className="auth-error" role="alert">{errors.password}</p>}
+          <div className='auth-hero-bottom'>
+            <p className="auth-hero-text">
+              Care feels better when everything is in one trusted place.
+            </p>
+            <p className='auth-hero-text2'>
+              Secure access to your CampusCare doctor.
+            </p>
+          </div>
+        </aside>
+
+        {/* Right: form panel */}
+        <div className="auth-panel">
+          <Logo />
+
+          <div className="auth-main">
+            <h1 className="auth-title">Welcome back</h1>
+            <p className="auth-subtitle">
+              {requested ? 'Sign in to continue.' : 'Sign in to book and manage your appointments.'}
+            </p>
+
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="auth-field">
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  aria-invalid={!!errors.email}
+                />
+                {errors.email && <p className="auth-error" role="alert">{errors.email}</p>}
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="password">Password</label>
+                <div className="auth-password">
+                  <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    aria-invalid={!!errors.password}
+                  />
+                  <button
+                    type="button"
+                    className="auth-toggle"
+                    onClick={() => setShowPassword((s) => !s)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
+                </div>
+                {errors.password && <p className="auth-error" role="alert">{errors.password}</p>}
+              </div>
+
+              <div className="auth-row">
+                {/* Does nothing yet */}
+                <label className="auth-check">
+                  <input type="checkbox" /> Remember me
+                </label>
+                {/* Does nothing yet */}
+                <button type="button" className="auth-link">
+                  Forgot password?
+                </button>
+              </div>
+
+              <button type="submit" className="btn btn-primary auth-submit">
+                Sign in
+              </button>
+              <p className="auth-note">Demo mode: any email and password will work.</p>
+            </form>
+          </div>
+
+          <div className="auth-footer">
+            <p className="auth-switch">
+              Don&apos;t have an account? <Link to="/signup">Create account</Link>
+            </p>
+            <p className="auth-secure">
+              <FontAwesomeIcon icon={faShieldHalved} />
+              Your health information is private, encrypted, and protected.
+            </p>
+          </div>
         </div>
-
-        <button type="submit" className="btn btn-primary auth-submit">
-          Sign in
-        </button>
-
-        <p className="auth-note">Demo mode: any email and password will work.</p>
-      </form>
-
-      <p className="auth-back">
-        <Link to="/">&larr; Return home</Link>
-      </p>
+      </div>
     </section>
   )
 }
