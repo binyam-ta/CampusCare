@@ -1,0 +1,323 @@
+/* Booking form + confirmation: mobile first. Shares the look of DoctorDetail. */
+
+.bk {
+    --bk-main: var(--color-main, #086c73);
+    --bk-main-soft: #e3f0ef;
+    --bk-tile: #edf4f3;
+    --bk-ink: var(--color-dark, #15343a);
+    --bk-muted: var(--color-muted, #667477);
+    --bk-line: #d5dddd;
+    --bk-danger: #b42318;
+    color: var(--bk-ink);
+}
+
+.bk :is(button, a, input, textarea):focus-visible {
+    outline: 2px solid var(--bk-main);
+    outline-offset: 2px;
+}
+
+.bk-back {
+    margin-bottom: 1rem;
+    padding: 0;
+    color: var(--bk-main);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.bk-title {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.bk-sub {
+    margin: 0.35rem 0 1.25rem;
+    color: var(--bk-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.bk-h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.bk-layout {
+    display: grid;
+    gap: 1rem;
+}
+
+.bk-card {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #e4ebea;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Definition lists (summary + receipt) */
+
+.bk dl {
+    margin: 0;
+}
+
+.bk dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #eef2f2;
+}
+
+.bk dl > div:last-child {
+    border-bottom: 0;
+}
+
+.bk dt {
+    flex: 0 0 auto;
+    color: var(--bk-muted);
+    font-size: 0.85rem;
+}
+
+.bk dd {
+    margin: 0;
+    min-width: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.bk-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.75rem 0 0;
+    padding: 0.75rem 0.9rem;
+    background: var(--bk-tile);
+    border-radius: 10px;
+}
+
+.bk-total span {
+    color: var(--bk-muted);
+    font-size: 0.85rem;
+}
+
+.bk-total strong {
+    font-size: 1.1rem;
+}
+
+.bk-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: var(--bk-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Form */
+
+.bk-seg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+    padding: 0.25rem;
+    background: var(--bk-tile);
+    border-radius: 12px;
+}
+
+.bk-seg button {
+    min-height: 40px;
+    color: var(--bk-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.bk-seg button.is-active {
+    color: var(--bk-main);
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.bk-field {
+    margin-bottom: 1rem;
+}
+
+.bk-field label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.bk-field :is(input, textarea) {
+    display: block;
+    width: 100%;
+    padding: 0 0.9rem;
+    color: var(--bk-ink);
+    font: inherit;
+    font-size: 1rem; /* 16px stops iOS zoom on focus */
+    background: #fff;
+    border: 1px solid var(--bk-line);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.bk-field input {
+    height: 48px;
+}
+
+.bk-field textarea {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.bk-field ::placeholder {
+    color: #9aa5a7;
+}
+
+.bk-field :is(input, textarea):focus {
+    outline: none;
+    border-color: var(--bk-main);
+    box-shadow: 0 0 4px rgba(8, 108, 115, 0.4);
+}
+
+.bk-field [aria-invalid='true'] {
+    border-color: var(--bk-danger);
+}
+
+.bk-error {
+    margin: 0.3rem 0 0;
+    color: var(--bk-danger);
+    font-size: 0.8rem;
+}
+
+.bk-hint {
+    margin: 0.25rem 0 0;
+    color: var(--bk-muted);
+    font-size: 0.75rem;
+    text-align: right;
+}
+
+.bk-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 14px;
+}
+
+/* Empty state */
+
+.bk-empty {
+    max-width: 420px;
+    margin: 2rem auto;
+    text-align: center;
+    color: var(--bk-muted);
+}
+
+.bk-empty .bk-title {
+    margin-bottom: 0.5rem;
+    color: var(--bk-ink);
+}
+
+/* Confirmation */
+
+.bk-done {
+    max-width: 520px;
+    margin-inline: auto;
+}
+
+.bk-success {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    margin: 1rem auto 1rem;
+    color: #fff;
+    background: var(--bk-main);
+    border-radius: 50%;
+    box-shadow: 0 0 0 8px var(--bk-main-soft);
+}
+
+.bk-center {
+    text-align: center;
+}
+
+.bk-receipt {
+    margin-top: 1.25rem;
+}
+
+.bk-ref {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8rem;
+}
+
+.bk-actions {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+}
+
+/* Tablet / desktop: summary sits beside the form */
+
+@media (min-width: 768px) {
+    .bk-title {
+        font-size: 1.75rem;
+    }
+
+    .bk-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (min-width: 900px) {
+    .bk-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    .bk-summary {
+        position: sticky;
+        top: 1rem;
+    }
+
+    .bk-cta {
+        width: auto;
+        min-width: 220px;
+        margin-left: auto;
+    }
+
+    .bk-actions .bk-cta,
+    .bk-empty .bk-cta {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bk-seg button {
+        transition: none;
+    }
+}
