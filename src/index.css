@@ -149,3 +149,65 @@ button {
     padding: 2rem;
   }
 }
+
+
+:root {
+  --color-main: #086C73;
+  --color-dark: #15343a;
+  --color-muted: #667477;
+}
+
+.notfound-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 2rem;
+  background: #f9fafa;
+}
+
+.notfound-content {
+  max-width: 600px;
+}
+
+.notfound-title {
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--color-main);
+  margin-bottom: 0.5rem;
+}
+
+.notfound-subtitle {
+  font-size: 1.25rem;
+  color: var(--color-dark);
+  margin-bottom: 1.5rem;
+}
+
+.notfound-body {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.notfound-body p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn-back {
+  display: inline-block;
+  background: var(--color-main);
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn-back:hover {
+  background: #0a7f85;
+}
