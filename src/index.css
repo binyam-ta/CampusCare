@@ -119,12 +119,12 @@ button {
 }
 
 .btn-primary {
-  background: #0f766e;
+  background: var(--color-main);
   color: white;
 }
 
 .btn-primary:hover {
-  background: #115e59;
+  background: #0a7f85;
 }
 
 .btn-secondary {
@@ -205,7 +205,7 @@ button {
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .btn-back:hover {

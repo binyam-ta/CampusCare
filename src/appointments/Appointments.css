@@ -1,0 +1,160 @@
+/* Appointment History (mobile first) */
+
+.appt-tabs {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.appt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.appt-card {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #e4ebea;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Top row: icon, doctor name, status badge */
+
+.appt-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.appt-icon {
+    flex: 0 0 40px;
+    display: grid;
+    place-items: center;
+    height: 40px;
+    color: var(--color-main);
+    background: #e3f0ef;
+    border-radius: 50%;
+}
+
+.appt-who {
+    flex: 1;
+    min-width: 0;
+}
+
+.appt-who h3 {
+    margin: 0;
+    color: var(--color-dark);
+    font-size: 1rem;
+    line-height: 1.3;
+}
+
+.appt-dept {
+    margin: 0.15rem 0 0;
+    color: var(--color-main);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.appt-badge {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.appt-badge-scheduled {
+    color: var(--color-main);
+    background: #e3f0ef;
+}
+
+.appt-badge-completed {
+    color: var(--color-muted);
+    background: #eef2f2;
+}
+
+.appt-badge-cancelled {
+    color: #b42318;
+    background: #fdeceb;
+}
+
+/* Date and time */
+
+.appt-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #eef2f2;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.appt-details p {
+    margin: 0;
+}
+
+.appt-details svg {
+    width: 1rem;
+    margin-right: 0.35rem;
+    color: var(--color-main);
+}
+
+/* Buttons */
+
+.appt-actions {
+    margin-top: 0.9rem;
+}
+
+.appt-actions .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+/* Empty state */
+
+.appt-empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--color-muted);
+    background: #fff;
+    border: 1px dashed #d5dddd;
+    border-radius: 12px;
+}
+
+.appt-empty svg {
+    color: var(--color-main);
+    font-size: 2rem;
+}
+
+.appt-empty h2 {
+    margin: 0.75rem 0 0.25rem;
+    color: var(--color-dark);
+    font-size: 1.1rem;
+}
+
+.appt-empty p {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+}
+
+/* Tablet and up: two cards per row, buttons shrink to fit */
+
+@media (min-width: 768px) {
+    .appt-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .appt-actions .btn {
+        display: inline-block;
+        width: auto;
+    }
+}
