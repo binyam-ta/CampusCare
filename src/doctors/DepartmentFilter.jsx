@@ -1,48 +1,71 @@
 import './Doctor.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export default function DepartmentFilter({
-  departments,
-  activeDepartment,
-  search,
+  departments = [],
+  activeDepartment = null,
+  onDepartmentChange,
+  searchTerm = '',
   onSearchChange,
-  onDepartmentChange
+  onSearchClear
 }) {
   return (
     <div className="Filter">
-
-      <form className="search-bar">
+      {/* 
+        Doctor Name Search Bar:
+        Allows users to filter doctors by name in real time.
+      */}
+      <div className="search-bar">
         <input
           type="text"
-          placeholder="Search for a doctor"
-          value={search}
+          placeholder="Search doctors by name (e.g. Abebe, Sarah, Selam)..."
+          value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
+          aria-label="Filter doctors by name"
         />
 
-        <button type="submit">
+        {searchTerm && (
+          <button
+            type="button"
+            onClick={onSearchClear}
+            title="Clear doctor search"
+            style={{ background: 'transparent', color: '#6b7280' }}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => {}}
+          aria-label="Submit search"
+        >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
-      </form>
+      </div>
 
-      <div className="Filter-buttons">
+      {/* 
+        Department Filter Buttons:
+        Toggles between 'All' and specific medical departments.
+      */}
+      <div className="Filter-buttons" role="group" aria-label="Filter by department">
         <button
           type="button"
           className={'btn ' + (activeDepartment ? 'btn-secondary' : 'btn-primary')}
           onClick={() => onDepartmentChange(null)}
+          aria-pressed={!activeDepartment}
         >
-          All
+          All Departments
         </button>
 
         {departments.map((dept) => (
           <button
             key={dept}
             type="button"
-            className={
-              'btn ' +
-              (activeDepartment === dept ? 'btn-primary' : 'btn-secondary')
-            }
+            className={'btn ' + (activeDepartment === dept ? 'btn-primary' : 'btn-secondary')}
             onClick={() => onDepartmentChange(dept)}
+            aria-pressed={activeDepartment === dept}
           >
             {dept}
           </button>

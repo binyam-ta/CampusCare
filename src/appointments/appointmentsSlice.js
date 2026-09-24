@@ -1,11 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// Redux slice for appointment data. Registered in store.js as state.appointments.
-// Provides sync actions: appointmentAdded, appointmentCancelled, appointmentsLoaded.
-// NOTE: These actions are exported but NOT dispatched by any component yet —
-// the booking/history pages are still scaffolds. When built out:
-//   - BookingForm will dispatch appointmentAdded
-//   - AppointmentHistory will dispatch appointmentsLoaded (after fetching from API)
 const initialState = {
   items: [],
   status: 'idle',
@@ -16,14 +10,15 @@ const appointmentsSlice = createSlice({
   name: 'appointments',
   initialState,
   reducers: {
+
     appointmentAdded: {
       reducer(state, action) {
-        state.items.push(action.payload)
+        state.items.unshift(action.payload)
       },
       prepare(payload) {
         return {
           payload: {
-            id: payload.id || crypto?.randomUUID?.() || String(Date.now()),
+            id: payload.id || `appt-${Date.now()}`,
             createdAt: new Date().toISOString(),
             status: 'scheduled',
             ...payload
@@ -31,18 +26,32 @@ const appointmentsSlice = createSlice({
         }
       }
     },
+
+    /**
+     * Updates an appointment's status to 'cancelled'.
+     */
     appointmentCancelled(state, action) {
-      const item = state.items.find(a => a.id === action.payload)
+      const appointmentId = action.payload
+      const item = state.items.find((a) => a.id === appointmentId)
       if (item) {
         item.status = 'cancelled'
       }
     },
+
+    /**
+     * Hydrates the slice with appointments loaded from data.json.
+     */
     appointmentsLoaded(state, action) {
-      state.items = action.payload
+      // Avoid duplicating appointments if items already exist
+      const existingIds = new Set(state.items.map((i) => i.id))
+      const newItems = action.payload.filter((item) => !existingIds.has(item.id))
+      state.items = [...state.items, ...newItems]
       state.status = 'succeeded'
     }
   }
 })
 
-export const { appointmentAdded, appointmentCancelled, appointmentsLoaded } = appointmentsSlice.actions
+export const { appointmentAdded, appointmentCancelled, appointmentsLoaded } =
+  appointmentsSlice.actions
+
 export default appointmentsSlice.reducer

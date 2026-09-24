@@ -1,149 +1,147 @@
-import { useSearchParams, Link } from 'react-router-dom'
+import { useState, useMemo, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import DepartmentFilter from './DepartmentFilter.jsx'
-import { DoctorCard } from './DoctorCard'
+import DoctorList from './DoctorList.jsx'
+import { fetchDoctors } from '../api/client.js'
 import './Doctor.css'
 
-const DEPARTMENTS = [
-  'General Medicine',
-  'Cardiology',
-  'Psychiatry',
-  'Dermatology',
-  'Sports Medicine'
-]
-
-const DOCTORS = [
-  {
-    id: '1',
-    name: 'Dr. Abebe Kebede',
-    department: 'Cardiology',
-    specialization: 'Interventional Cardiology',
-    experience: 8,
-    rating: 4.8,
-    reviews: 124
-  },
-  {
-    id: '2',
-    name: 'Dr. Sarah Johnson',
-    department: 'Dermatology',
-    specialization: 'Skin Care',
-    experience: 7,
-    rating: 4.9,
-    reviews: 98
-  },
-  {
-    id: '3',
-    name: 'Dr. Hana Tesfaye',
-    department: 'Psychiatry',
-    specialization: 'Mental Health',
-    experience: 10,
-    rating: 4.7,
-    reviews: 86
-  },
-  {
-    id: '4',
-    name: 'Dr. Dawit Alemu',
-    department: 'Sports Medicine',
-    specialization: 'Sports Injuries',
-    experience: 6,
-    rating: 4.8,
-    reviews: 72
-  }
-]
-
 export default function DoctorDirectory() {
+  // --------------------------------------------------------------------------
+  // 1. ROUTER QUERY PARAMS
+  // --------------------------------------------------------------------------
+  // Reads and writes the ?dept= query parameter for deep-linking and browser history support
   const [searchParams, setSearchParams] = useSearchParams()
-
   const activeDepartment = searchParams.get('dept') || null
-  const search = searchParams.get('search') || ''
 
-  const handleSearchChange = (value) => {
-    const params = new URLSearchParams(searchParams)
+  // --------------------------------------------------------------------------
+  // 2. STATE MANAGEMENT (`useState`)
+  // --------------------------------------------------------------------------
+  // Stores doctors fetched from data.json 
+  const [doctors, setDoctors] = useState([])
+  // Tracks user input to filter doctors by name ("on the doctor page filter the name")
+  const [searchTerm, setSearchTerm] = useState('')
+  // Tracks initial loading state
+  const [isLoading, setIsLoading] = useState(true)
 
-    if (value.trim()) {
-      params.set('search', value)
-    } else {
-      params.delete('search')
+  // --------------------------------------------------------------------------
+  // 3. DATA FETCHING SIDE EFFECT (`useEffect`)
+  // --------------------------------------------------------------------------
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadDoctors() {
+      try {
+        const data = await fetchDoctors()
+        if (isMounted) {
+          setDoctors(data)
+        }
+      } catch (err) {
+        console.error('Failed to load doctors from data.json', err)
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      }
     }
 
-    setSearchParams(params)
-  }
+    loadDoctors()
 
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  // --------------------------------------------------------------------------
+  // 4. DYNAMIC DEPARTMENTS LIST (`useMemo`)
+  // --------------------------------------------------------------------------
+  // Derives unique departments from the loaded doctors array 
+  const departments = useMemo(() => {
+    const set = new Set()
+    doctors.forEach((doc) => {
+      if (doc.department) set.add(doc.department)
+    })
+    return Array.from(set).sort()
+  }, [doctors])
+
+  // --------------------------------------------------------------------------
+  // 5. MEMOIZED DOCTOR FILTERING (`useMemo`)
+  // --------------------------------------------------------------------------
+  // Requirements:
+  // - "on the doctor page filter the name": Matches `doctor.name` with `searchTerm`
+  // - Filters by `activeDepartment` when a department button is selected
+  const filteredDoctors = useMemo(() => {
+    const nameQuery = searchTerm.trim().toLowerCase()
+
+    return doctors.filter((doctor) => {
+      // 1. Department condition
+      const matchesDept =
+        !activeDepartment ||
+        doctor.department.toLowerCase() === activeDepartment.toLowerCase()
+
+      // 2. Name condition (filters doctors by name)
+      const matchesName =
+        !nameQuery || doctor.name.toLowerCase().includes(nameQuery)
+
+      return matchesDept && matchesName
+    })
+  }, [doctors, activeDepartment, searchTerm])
+
+  // Updates the ?dept= query param in the URL
   const handleDepartmentChange = (dept) => {
-    const params = new URLSearchParams(searchParams)
-
     if (dept) {
-      params.set('dept', dept)
+      searchParams.set('dept', dept)
     } else {
-      params.delete('dept')
+      searchParams.delete('dept')
     }
-
-    setSearchParams(params)
+    setSearchParams(searchParams)
   }
 
-  const filteredDoctors = DOCTORS.filter((doctor) => {
-    const matchesSearch =
-      doctor.name.toLowerCase().includes(search.toLowerCase()) ||
-      doctor.department.toLowerCase().includes(search.toLowerCase()) ||
-      doctor.specialization.toLowerCase().includes(search.toLowerCase())
-
-    const matchesDepartment =
-      !activeDepartment ||
-      doctor.department === activeDepartment
-
-    return matchesSearch && matchesDepartment
-  })
+  // Resets all filters (both name search and department)
+  const handleResetFilters = () => {
+    setSearchTerm('')
+    searchParams.delete('dept')
+    setSearchParams(searchParams)
+  }
 
   return (
     <section className="screen">
       <h1 className="screen-title">Doctor Directory</h1>
 
+      {/* Search by doctor name & Filter by department */}
       <DepartmentFilter
-        departments={DEPARTMENTS}
+        departments={departments}
         activeDepartment={activeDepartment}
-        search={search}
-        onSearchChange={handleSearchChange}
         onDepartmentChange={handleDepartmentChange}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onSearchClear={() => setSearchTerm('')}
       />
 
-      <div
-        className="screen-body"
-        style={{ borderRadius: '10px' }}
-      >
+      <div className="screen-body" style={{ borderRadius: '10px' }}>
         <div>
+          {/* Dynamic doctor count indicator */}
           <p className="doctors-available">
-            {filteredDoctors.length} doctors available
+            {isLoading
+              ? 'Loading clinicians...'
+              : `${filteredDoctors.length} ${
+                  filteredDoctors.length === 1 ? 'doctor' : 'doctors'
+                } available`}
+            {activeDepartment && ` in ${activeDepartment}`}
+            {searchTerm.trim() && ` matching "${searchTerm}"`}
           </p>
 
-          {filteredDoctors.length === 0 ? (
-            <div className="no-results">
-              No doctors match your search.
-            </div>
+          {/* Renders the filtered doctor cards or empty state */}
+          {isLoading ? (
+            <p style={{ color: '#6b7280', padding: '1.5rem 0' }}>
+              Fetching doctors from data.json...
+            </p>
           ) : (
-            <div className="doctor-list">
-              {filteredDoctors.map((doctor) => (
-                <DoctorCard
-                  key={doctor.id}
-                  doctor={doctor}
-                />
-              ))}
-            </div>
+            <DoctorList
+              doctors={filteredDoctors}
+              searchTerm={searchTerm}
+              onResetFilters={handleResetFilters}
+            />
           )}
-
-          <div className="doctor-test-links">
-            <Link
-              to="/doctors/dr-1"
-              className="btn btn-primary"
-            >
-              Open /doctors/dr-1
-            </Link>
-
-            <Link
-              to="/doctors/dr-99"
-              className="btn btn-secondary"
-            >
-              Open /doctors/dr-99
-            </Link>
-          </div>
         </div>
       </div>
     </section>

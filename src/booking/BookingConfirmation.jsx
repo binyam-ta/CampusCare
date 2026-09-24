@@ -1,19 +1,27 @@
 import { useLocation, Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import './Booking.css'
 
 const fmtDate = (iso) =>
   new Date(iso).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+
 const fmtTime = (iso) =>
   new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+
 const MODE_LABEL = { video: 'Video visit', 'in-person': 'In-person visit' }
 
 export default function BookingConfirmation() {
   const location = useLocation()
-  // Arrives via ROUTE STATE from BookingForm:
-  // navigate('/booking/confirmation', { state: { appointmentId, appointment } })
-  const { appointmentId, appointment } = location.state || {}
+  const { appointmentId, appointment: stateAppointment } = location.state || {}
 
-  if (!appointmentId || !appointment) {
+  // Fallback to Redux store if route state is empty
+  const storeAppointment = useSelector((state) =>
+    appointmentId ? state.appointments.items.find((a) => a.id === appointmentId) : null
+  )
+
+  const appointment = stateAppointment || storeAppointment
+
+  if (!appointment) {
     return (
       <section className="screen bk">
         <div className="bk-empty">
@@ -28,17 +36,27 @@ export default function BookingConfirmation() {
   }
 
   const { doctorName, doctorId, slotDateTime, visitType, fee, currency, patient } = appointment
+  const confirmationCode = appointment.id || appointmentId
 
   return (
     <section className="screen bk bk-done">
       <div className="bk-success" aria-hidden="true">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="34"
+          height="34"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M5 12.5l4.5 4.5L19 7.5" />
         </svg>
       </div>
-      <h1 className="bk-title bk-center">Booking confirmed</h1>
+      <h1 className="bk-title bk-center">Booking confirmed!</h1>
       <p className="bk-sub bk-center">
-        Your appointment with {doctorName || `doctor #${doctorId}`} is scheduled.
+        Your appointment with {doctorName || `Doctor #${doctorId}`} has been scheduled.
       </p>
 
       <div className="bk-card bk-receipt">
@@ -65,15 +83,15 @@ export default function BookingConfirmation() {
           )}
           {fee != null && (
             <div>
-              <dt>Visit fee</dt>
+              <dt>Consultation fee</dt>
               <dd>
-                {currency} {fee}
+                {currency || 'ETB'} {fee}
               </dd>
             </div>
           )}
           <div>
             <dt>Confirmation ID</dt>
-            <dd className="bk-ref">{appointmentId}</dd>
+            <dd className="bk-ref">{confirmationCode}</dd>
           </div>
         </dl>
       </div>

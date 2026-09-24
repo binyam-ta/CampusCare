@@ -1,80 +1,113 @@
 import { useState } from 'react'
 import { useAuth } from './auth/AuthContext.jsx'
 import { NavLink } from 'react-router-dom'
-import './navbar.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStarOfLife, faHouse, faUserDoctor, faCalendarCheck, faRightFromBracket, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
-
+import './Navbar.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faStarOfLife,
+  faHouse,
+  faUserDoctor,
+  faCalendarCheck,
+  faRightFromBracket,
+  faRightToBracket,
+  faUser
+} from '@fortawesome/free-solid-svg-icons'
 
 export function Navbar() {
-    const { student, signOut } = useAuth()
+  const { student, signOut } = useAuth()
 
-    //controls whether the mobile navigation menu is open.
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // Controls whether the mobile navigation menu drawer is open
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-    //toggle the mobile menu open/closed.
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
-    }
+  // Toggle the mobile drawer
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev)
+  }
 
-    //close the mobile menu when a navigation link is clicked.
-    const closeMenu = () => {
-        setIsMenuOpen(false)
-    }
+  // Close drawer on link navigation
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
 
-    return (
-        <div className="navbar-container">
-            <nav className="navbar">
-                <div className="brand">
-                    <FontAwesomeIcon icon={faStarOfLife} className="brand-icon" />
-                    <span>CampusCare</span>
-                </div>
-                <button
-                    className={`burger-menu ${isMenuOpen ? 'is-open' : ''}`} onClick={toggleMenu}
-                    aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                    aria-expanded={isMenuOpen}
-                >
-                    <span className="burger-bar"></span>
-                    <span className="burger-bar"></span>
-                    <span className="burger-bar"></span>
-                </button>
+  return (
+    <div className="navbar-container">
+      <nav className="navbar">
+        {/* Brand / Logo */}
+        <NavLink to="/" className="brand" onClick={closeMenu} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <FontAwesomeIcon icon={faStarOfLife} className="brand-icon" />
+          <span>CampusCare</span>
+        </NavLink>
 
-                {/* Navigation links. On mobile this becomes a sliding menu.
-                On tablet/desktop it becomes a normal horizontal navigation.
-                */}
-                <div className={`menu ${isMenuOpen ? 'menu-open' : ''}`}>
-                    <NavLink to="/" end onClick={closeMenu}>
-                        <FontAwesomeIcon icon={faHouse} />
-                        <span>Home</span>
-                    </NavLink>
+        {/* Mobile Hamburger Button */}
+        <button
+          className={`burger-menu ${isMenuOpen ? 'is-open' : ''}`}
+          onClick={toggleMenu}
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isMenuOpen}
+        >
+          <span className="burger-bar"></span>
+          <span className="burger-bar"></span>
+          <span className="burger-bar"></span>
+        </button>
 
-                    <NavLink to="/doctors" onClick={closeMenu}>
-                        <FontAwesomeIcon icon={faUserDoctor} />
-                        <span>Doctors</span>
-                    </NavLink>
+        {/* Navigation Menu */}
+        <div className={`menu ${isMenuOpen ? 'menu-open' : ''}`}>
+          <NavLink to="/" end onClick={closeMenu}>
+            <FontAwesomeIcon icon={faHouse} />
+            <span>Home</span>
+          </NavLink>
 
-                    <NavLink to="/appointments" onClick={closeMenu}>
-                        <FontAwesomeIcon icon={faCalendarCheck} />
-                        <span>My Appointments</span>
-                    </NavLink>
-                    {student ? (
-                        <NavLink to="/"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                signOut()
-                                closeMenu()
-                            }}
-                        >
-                            <FontAwesomeIcon icon={faRightFromBracket} />
-                            <span>Sign out</span>
-                        </NavLink>) : (
-                        <NavLink to="/signin" onClick={closeMenu}>
-                            <FontAwesomeIcon icon={faRightToBracket} />
-                            <span>Sign in</span>
-                        </NavLink>
-                    )}
-                </div>
-            </nav>
+          <NavLink to="/doctors" onClick={closeMenu}>
+            <FontAwesomeIcon icon={faUserDoctor} />
+            <span>Doctors</span>
+          </NavLink>
+
+          <NavLink to="/appointments" onClick={closeMenu}>
+            <FontAwesomeIcon icon={faCalendarCheck} />
+            <span>My Appointments</span>
+          </NavLink>
+
+          {student ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span
+                style={{
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  color: 'var(--color-main)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0 0.5rem'
+                }}
+                title={`Signed in as ${student.email}`}
+              >
+                <FontAwesomeIcon icon={faUser} />
+                <span>{student.name}</span>
+              </span>
+
+              <NavLink
+                to="/"
+                onClick={(e) => {
+                  e.preventDefault()
+                  signOut()
+                  closeMenu()
+                }}
+                title="Sign out of CampusCare"
+              >
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                <span>Sign out</span>
+              </NavLink>
+            </div>
+          ) : (
+            <NavLink to="/signin" onClick={closeMenu}>
+              <FontAwesomeIcon icon={faRightToBracket} />
+              <span>Sign in</span>
+            </NavLink>
+          )}
         </div>
-    )
+      </nav>
+    </div>
+  )
 }
+
+export default Navbar

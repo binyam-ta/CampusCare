@@ -6,3 +6,5 @@ export function Button({ children, variant = 'primary', ...props }) {
     </button>
   )
 }
+
+export default Button

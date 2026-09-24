@@ -10,28 +10,25 @@ import SignIn from './auth/SignIn.jsx'
 import RequireAuth from './auth/RequireAuth.jsx'
 import NotFound from './NotFound.jsx'
 
-// AppointmentHistory is lazy-loaded — it's only fetched when the user navigates
-// to /appointments. This keeps it out of the initial JS bundle.
+// Lazy-load AppointmentHistory to demonstrate performance optimization & code-splitting
 const AppointmentHistory = lazy(() =>
-  import('./appointments/AppointmentHistory.jsx')
-    .then((module) => ({ default: module.default }))
+  import('./appointments/AppointmentHistory.jsx').then((module) => ({
+    default: module.default
+  }))
 )
 
+// Fallback spinner/placeholder while lazy route chunks download
 function LazyFallback() {
   return (
     <section className="screen">
       <h1 className="screen-title">Loading...</h1>
-      <div className="screen-body" style={{ borderRadius: 10 }}>
-        Fetching your appointment history.
+      <div className="screen-body" style={{ borderRadius: 10, padding: '2rem', textAlign: 'center' }}>
+        Fetching your appointment records...
       </div>
     </section>
   )
 }
 
-// All routes are children of Layout (navbar + footer + <Outlet />).
-// Protected routes are wrapped in <RequireAuth> which redirects to /signin if unauthenticated.
-// Public: /, /doctors, /doctors/:id, /signin, *
-// Protected: /booking, /booking/confirmation, /appointments
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -86,3 +83,5 @@ export const router = createBrowserRouter([
     ]
   }
 ])
+
+export default router

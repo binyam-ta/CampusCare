@@ -1,56 +1,98 @@
-// Thin fetch wrapper for the json-server mock API.
-// Provides: fetchDoctors, fetchDoctor, fetchSlots, fetchAppointments,
-//           createAppointment, cancelAppointment.
-//
-// NOTE: Not imported by any component yet — the page components are still
-// scaffolds. When built out, DoctorDirectory/DoctorDetail will use the doctor
-// functions, and BookingForm/AppointmentHistory will use the appointment ones.
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
+import fallbackData from '../data/data.json'
 
-async function request(path, options = {}) {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options
-  })
-  if (!res.ok) {
-    throw new Error(`Request failed: ${res.status}`)
+// Cache the fetched data in-memory to prevent repeated network requests
+let dataCache = null
+
+export async function fetchData() {
+  if (dataCache) {
+    return dataCache
   }
-  return res.json()
+
+  try {
+    const response = await fetch('/data.json')
+    if (!response.ok) {
+      throw new Error(`Failed to load data.json: HTTP status ${response.status}`)
+    }
+    const data = await response.json()
+    dataCache = data
+    return data
+  } catch (error) {
+    console.warn('Network request for /data.json failed, using bundled fallback data.', error)
+    dataCache = fallbackData
+    return fallbackData
+  }
 }
+
 
 export async function fetchDoctors(params = {}) {
-  const query = new URLSearchParams()
-  if (params.department) query.set('department', params.department)
-  const qs = query.toString()
-  return request(`/doctors${qs ? `?${qs}` : ''}`)
+  const data = await fetchData()
+  let list = data.doctors || []
+
+  if (params.department) {
+    const deptLower = params.department.trim().toLowerCase()
+    list = list.filter((doc) => doc.department.toLowerCase() === deptLower)
+  }
+
+  if (params.name) {
+    const nameLower = params.name.trim().toLowerCase()
+    list = list.filter((doc) => doc.name.toLowerCase().includes(nameLower))
+  }
+
+  return list
 }
+
 
 export async function fetchDoctor(id) {
-  return request(`/doctors/${id}`)
+  const data = await fetchData()
+  const doctors = data.doctors || []
+  return doctors.find((doc) => String(doc.id) === String(id)) || null
 }
 
-export async function fetchSlots(doctorId, params = {}) {
-  const query = new URLSearchParams({ doctorId })
-  if (params.start) query.set('start', params.start)
-  if (params.end) query.set('end', params.end)
-  return request(`/slots?${query.toString()}`)
+
+export async function fetchSpecialties() {
+  const data = await fetchData()
+  return data.specialties || []
 }
 
-export async function fetchAppointments(studentId) {
-  const query = new URLSearchParams({ studentId })
-  return request(`/appointments?${query.toString()}`)
+
+export async function fetchRecommendedDoctor() {
+  const data = await fetchData()
+  return data.recommendedDoctor || (data.doctors && data.doctors[0]) || null
 }
+
+
+export async function fetchClinicInfo() {
+  const data = await fetchData()
+  return data.clinicInfo || {}
+}
+
+
+export async function fetchAppointments(studentEmail) {
+  const data = await fetchData()
+  const list = data.appointments || []
+  if (!studentEmail) return list
+  return list.filter(
+    (appt) =>
+      appt.patient?.email?.toLowerCase() === studentEmail.toLowerCase()
+  )
+}
+
+
+export async function fetchMockUsers() {
+  const data = await fetchData()
+  return data.users || []
+}
+
 
 export async function createAppointment(payload) {
-  return request('/appointments', {
-    method: 'POST',
-    body: JSON.stringify(payload)
-  })
+  return {
+    ...payload,
+    id: payload.id || `appt-${Date.now()}`,
+    createdAt: new Date().toISOString()
+  }
 }
 
+
 export async function cancelAppointment(id) {
-  return request(`/appointments/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ status: 'cancelled' })
-  })
+  return { id, status: 'cancelled', updatedAt: new Date().toISOString() }
 }
