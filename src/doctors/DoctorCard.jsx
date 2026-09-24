@@ -1,10 +1,3 @@
-// import { Link } from 'react-router-dom'
-
-// export default function DoctorCard({ doctor }) {
-//   return (
-//     
-//   )
-// }
 import { Link } from 'react-router-dom'
 import './Doctor.css'
 import drAbebeImg from '../assets/images/dr-abebe-kebede.jpg'
@@ -44,6 +37,11 @@ export function DoctorCard() {
           <p className="doctor-experience">
             Cardiology <span>•</span> 8 years
           </p>
+        </div>
+
+        <div className="doctor-availability">
+          <span className="availability-label">NEXT AVAILABLE</span>
+          <span className="availability-time">TODAY · 3:30 PM</span>
         </div>
 
       </article>

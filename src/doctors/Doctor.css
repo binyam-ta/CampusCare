@@ -220,6 +220,31 @@
     margin: 0 0.2rem;
 }
 
+.doctor-availability {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin-left: auto;
+    padding-left: 0.75rem;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.availability-label {
+    color: #6b7280;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.availability-time {
+    margin-top: 0.25rem;
+    color: #16a34a;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
 
 /* DoctorDirectory Test Links */
 
@@ -229,6 +254,93 @@
     gap: 0.5rem;
     margin-top: 1rem;
 }
+
+/* Smaller phones to fix image of card*/
+@media (max-width: 399px) {
+    .doctor-card {
+        grid-template-columns: 58px minmax(0, 1fr);
+        column-gap: 0.6rem;
+        padding: 0.65rem;
+    }
+
+    .doctor-avatar {
+        width: 58px;
+        height: 72px;
+    }
+
+    .doctor-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .doctor-department {
+        font-size: 0.65rem;
+    }
+
+    .doctor-specialization {
+        font-size: 0.7rem;
+    }
+
+    .doctor-rating {
+        margin-top: 0.3rem;
+    }
+
+    .doctor-experience {
+        font-size: 0.7rem !important;
+    }
+}
+
+
+/* Mobile */
+
+@media (max-width: 599px) {
+
+    .doctor-card {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        column-gap: 0.7rem;
+        row-gap: 0.6rem;
+        align-items: start;
+    }
+
+    .doctor-avatar {
+        grid-column: 1;
+        grid-row: 1;
+        width: 64px;
+        height: 80px;
+    }
+
+    .doctor-info {
+        grid-column: 2;
+        grid-row: 1;
+        min-width: 0;
+    }
+
+    .doctor-availability {
+        grid-column: 2;
+        grid-row: 2;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0.5rem 0 0;
+        border-top: 1px solid #eef2f1;
+        text-align: left;
+        white-space: normal;
+    }
+
+    .availability-label {
+        font-size: 0.6rem;
+    }
+
+    .availability-time {
+        margin-top: 0;
+        font-size: 0.7rem;
+    }
+}
+
 
 
 /* Larger Mobile */
@@ -283,6 +395,15 @@
     .Filter-buttons .btn {
         padding: 0.5rem 0.9rem;
         font-size: 0.9rem;
+    }
+
+    .availability-label{
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .availability-time{
+        font-size: 14px;
     }
 }
 
