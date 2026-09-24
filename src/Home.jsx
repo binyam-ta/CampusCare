@@ -1,29 +1,69 @@
-import { Link } from 'react-router-dom'
-import './Home.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faArrowRight, faRunning, faHandDots, faHeadSideVirus } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import './Home.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faMagnifyingGlass,
+  faArrowRight,
+  faRunning,
+  faHandDots,
+  faHeadSideVirus
+} from '@fortawesome/free-solid-svg-icons'
+
 import doctorImg from './assets/images/home-page-doctor.jpg'
 import recommendedImg from './assets/images/recommended-doctor.jpg'
+
 export default function Home() {
+  const [search, setSearch] = useState('')
+  const navigate = useNavigate()
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+
+    if (search.trim()) {
+      navigate(`/doctors?search=${encodeURIComponent(search.trim())}`)
+    }
+  }
+
   return (
     <section className="screen">
-      <div className='home-screen'>
-        <h2 className='greetings'>GOOD MORNING, EYOB</h2>
-        <h1 className="screen-title">How can we care for you today?</h1>
+      <div className="home-screen">
+
+        <h2 className="greetings">GOOD MORNING, EYOB</h2>
+
+        <h1 className="screen-title">
+          How can we care for you today?
+        </h1>
+
         <div className="screen-body">
-          <div className="search-bar">
-            <input type="text" placeholder="Find doctors or specialists" />
+
+          <form className="search-bar" onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Find doctors or specialists"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
             <button type="submit">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
-          </div>
-          <div className='care-card'>
+          </form>
+
+          <div className="care-card">
             <div>
               <h2>Care that fits your day</h2>
-              <p>Book a trusted clinician in minutes,online or in person.</p>
-              <span>Find a doctor <FontAwesomeIcon icon={faArrowRight} /></span>
+              <p>
+                Book a trusted clinician in minutes, online or in person.
+              </p>
+
+              <Link to="/doctors">
+                Find a doctor
+                <FontAwesomeIcon icon={faArrowRight} />
+              </Link>
             </div>
-            <img src={doctorImg} alt='doctor' />
+
+            <img src={doctorImg} alt="doctor" />
           </div>
 
           <div className="specialists-section">
@@ -35,38 +75,58 @@ export default function Home() {
                 <FontAwesomeIcon icon={faArrowRight} />
               </Link>
             </div>
+
             <div className="specialists-row">
+
               <div className="specialist-card">
-                <FontAwesomeIcon icon={faHeadSideVirus} className="specialist-icon" />
+                <FontAwesomeIcon
+                  icon={faHeadSideVirus}
+                  className="specialist-icon"
+                />
                 <h3>Psychiatry</h3>
                 <p>12 specialists</p>
               </div>
+
               <div className="specialist-card">
-                <FontAwesomeIcon icon={faHandDots} className="specialist-icon" />
+                <FontAwesomeIcon
+                  icon={faHandDots}
+                  className="specialist-icon"
+                />
                 <h3>Dermatology</h3>
                 <p>8 specialists</p>
               </div>
+
               <div className="specialist-card">
-                <FontAwesomeIcon icon={faRunning} className="specialist-icon" />
+                <FontAwesomeIcon
+                  icon={faRunning}
+                  className="specialist-icon"
+                />
                 <h3>Sports Medicine</h3>
                 <p>5 specialists</p>
               </div>
-              {/* we can sdd more categories as needed or even fetch*/}
+
             </div>
           </div>
 
           <div className="recommended-section">
             <h2>Recommended for You</h2>
+
             <div className="doctor-card">
-              <img src={recommendedImg} alt="Doctor" className="doctor-recommend-img" />
+              <img
+                src={recommendedImg}
+                alt="Doctor"
+                className="doctor-recommend-img"
+              />
+
               <div className="doctor-info">
                 <h3>Dr. Sarah Johnson</h3>
                 <p>Dermatologist</p>
-                <p>Expert in skin care and cosmetic treatments</p>
+                <p>
+                  Expert in skin care and cosmetic treatments
+                </p>
               </div>
             </div>
           </div>
-
 
         </div>
       </div>

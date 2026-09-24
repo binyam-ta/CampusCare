@@ -1,48 +1,46 @@
-// import { Link } from 'react-router-dom'
-
-// export default function DoctorCard({ doctor }) {
-//   return (
-//     
-//   )
-// }
 import { Link } from 'react-router-dom'
 import './Doctor.css'
 import drAbebeImg from '../assets/images/dr-abebe-kebede.jpg'
 
-export function DoctorCard() {
+export function DoctorCard({ doctor }) {
   return (
-    <Link to="/doctors/dr-3" className="doctor-card-link">
+    <Link
+      to={`/doctors/dr-${doctor.id}`}
+      className="doctor-card-link"
+    >
       <article className="doctor-card">
 
         <div className="doctor-avatar">
           <img
             className="doctor-img"
             src={drAbebeImg}
-            alt="Dr. Abebe Kebede"
+            alt={doctor.name}
           />
         </div>
 
         <div className="doctor-info">
-          <h3>Dr. Abebe Kebede</h3>
+          <h3>{doctor.name}</h3>
 
           <p className="doctor-department">
-            Cardiology
+            {doctor.department}
           </p>
 
           <p className="doctor-specialization">
-            Interventional Cardiology
+            {doctor.specialization}
           </p>
 
           <div className="doctor-rating">
             <span className="doctor-stars">★</span>
-            <span className="doctor-rating-value">4.8</span>
+            <span className="doctor-rating-value">
+              {doctor.rating}
+            </span>
             <span className="doctor-reviews">
-              (124 reviews)
+              ({doctor.reviews} reviews)
             </span>
           </div>
 
           <p className="doctor-experience">
-            Cardiology <span>•</span> 8 years
+            {doctor.department} <span>•</span> {doctor.experience} years
           </p>
         </div>
 
