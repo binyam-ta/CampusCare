@@ -9,6 +9,7 @@ import BookingConfirmation from './booking/BookingConfirmation.jsx'
 import SignIn from './auth/SignIn.jsx'
 import RequireAuth from './auth/RequireAuth.jsx'
 import NotFound from './NotFound.jsx'
+import DoctorDashboard from './doctor-dashboard/Doctordashboard.jsx'
 
 // AppointmentHistory is lazy-loaded — it's only fetched when the user navigates
 // to /appointments. This keeps it out of the initial JS bundle.
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
       {
         path: 'signin',
         element: <SignIn />
+      },
+      {
+        path: 'doctor-dashboard',
+        element: <DoctorDashboard />
       },
       {
         path: '*',

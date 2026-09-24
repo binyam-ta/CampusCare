@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { useNavigate, useSearchParams, Navigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStarOfLife, faEye, faEyeSlash, faShieldHalved } from '@fortawesome/free-solid-svg-icons'
@@ -143,6 +144,9 @@ export default function SignIn() {
             <p className="auth-switch">
               Don&apos;t have an account? <Link to="/signup">Create account</Link>
             </p>
+            <p className="auth-switch">
+              <Link to="/doctor-dashboard">Go to Doctor Dashboard</Link>
+              </p>
             <p className="auth-secure">
               <FontAwesomeIcon icon={faShieldHalved} />
               Your health information is private, encrypted, and protected.
