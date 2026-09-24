@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-// Adjust this path to wherever your slice lives
 import { appointmentAdded } from '../appointments/appointmentsSlice'
 import './Booking.css'
 
@@ -11,50 +11,29 @@ const fmtTime = (iso) =>
   new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
 const MODE_LABEL = { video: 'Video visit', 'in-person': 'In-person visit' }
 
-function validate(v, forSelf) {
-  const e = {}
-  if (v.fullName.trim().length < 2) {
-    e.fullName = forSelf ? 'Enter your full name.' : "Enter the patient's full name."
-  }
-  if (!/^\+?[0-9\s-]{9,15}$/.test(v.phone.trim())) {
-    e.phone = 'Enter a valid phone number, e.g. 0911 234 567.'
-  }
-  if (v.email.trim() && !/^\S+@\S+\.\S+$/.test(v.email.trim())) {
-    e.email = 'Enter a valid email address, or leave it empty.'
-  }
-  if (v.reason.trim().length < 5) {
-    e.reason = 'Tell the doctor briefly why you are visiting.'
-  }
-  return e
-}
-
 export default function BookingForm() {
   const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // Values arrive via ROUTE STATE, passed by DoctorDetail's <Link to="/booking" state={...}>.
+
   const { doctorId, slotId, slotDateTime, doctorName, visitType, fee, currency } =
     location.state || {}
 
   const [forSelf, setForSelf] = useState(true)
-  const [values, setValues] = useState({ fullName: '', phone: '', email: '', reason: '' })
-  const [errors, setErrors] = useState({})
 
-  const onChange = (e) => {
-    const { name, value } = e.target
-    setValues((v) => ({ ...v, [name]: value }))
-    if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }))
-  }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { fullName: '', phone: '', email: '', reason: '' },
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const found = validate(values, forSelf)
-    setErrors(found)
-    const first = Object.keys(found)[0]
-    if (first) {
-      document.getElementById(`bk-${first}`)?.focus()
-      return
-    }
+  const reasonText = watch('reason') || ''
+
+  // 1. Correct onSubmit handler
+  const onSubmit = (data) => {
     const appointmentId = 'demo-appt-' + Date.now()
     const appointment = {
       id: appointmentId,
@@ -65,11 +44,11 @@ export default function BookingForm() {
       visitType,
       fee,
       currency,
-      patient: { ...values, forSelf },
+      patient: { ...data, forSelf },
       status: 'scheduled',
     }
 
-    dispatch(appointmentAdded(appointment)) // saves it so /appointments can list it
+    dispatch(appointmentAdded(appointment))
     navigate('/booking/confirmation', { state: { appointmentId, appointment } })
   }
 
@@ -87,41 +66,38 @@ export default function BookingForm() {
     )
   }
 
-  const field = (name, label, props = {}) => (
+  // 2. Helper receiving name, label, rules, and props
+  const field = (name, label, rules = {}, props = {}) => (
     <div className="bk-field">
       <label htmlFor={`bk-${name}`}>{label}</label>
       {props.multiline ? (
         <textarea
           id={`bk-${name}`}
-          name={name}
           rows={4}
           maxLength={300}
-          value={values[name]}
-          onChange={onChange}
           aria-invalid={!!errors[name]}
           aria-describedby={errors[name] ? `bk-${name}-err` : undefined}
           placeholder={props.placeholder}
+          {...register(name, rules)}
         />
       ) : (
         <input
           id={`bk-${name}`}
-          name={name}
           type={props.type || 'text'}
           inputMode={props.inputMode}
           autoComplete={props.autoComplete}
-          value={values[name]}
-          onChange={onChange}
           aria-invalid={!!errors[name]}
           aria-describedby={errors[name] ? `bk-${name}-err` : undefined}
           placeholder={props.placeholder}
+          {...register(name, rules)}
         />
       )}
       {errors[name] && (
         <p id={`bk-${name}-err`} className="bk-error" role="alert">
-          {errors[name]}
+          {errors[name].message}
         </p>
       )}
-      {props.multiline && <p className="bk-hint">{values[name].length}/300</p>}
+      {props.multiline && <p className="bk-hint">{reasonText.length}/300</p>}
     </div>
   )
 
@@ -134,7 +110,6 @@ export default function BookingForm() {
       <p className="bk-sub">Check the details, then tell us who the visit is for.</p>
 
       <div className="bk-layout">
-        {/* Appointment summary */}
         <aside className="bk-card bk-summary" aria-label="Appointment summary">
           <h2 className="bk-h2">Appointment</h2>
           <dl>
@@ -170,8 +145,8 @@ export default function BookingForm() {
           </Link>
         </aside>
 
-        {/* Patient form */}
-        <form className="bk-card bk-form" onSubmit={handleSubmit} noValidate>
+        {/* 3. Pass onSubmit into handleSubmit */}
+        <form className="bk-card bk-form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <h2 className="bk-h2">Patient details</h2>
 
           <div className="bk-seg" role="group" aria-label="Who is this visit for?">
@@ -193,24 +168,51 @@ export default function BookingForm() {
             </button>
           </div>
 
-          {field('fullName', forSelf ? 'Full name' : "Patient's full name", {
-            autoComplete: forSelf ? 'name' : 'off',
-          })}
-          {field('phone', 'Phone number', {
-            type: 'tel',
-            inputMode: 'tel',
-            autoComplete: 'tel',
-            placeholder: '0911 234 567',
-          })}
-          {field('email', 'Email (optional)', {
-            type: 'email',
-            inputMode: 'email',
-            autoComplete: 'email',
-          })}
-          {field('reason', 'Reason for visit', {
-            multiline: true,
-            placeholder: 'For example: recurring headaches for two weeks',
-          })}
+          {/* 4. Correct 3rd argument (rules) and 4th argument (props) */}
+          {field(
+            'fullName',
+            forSelf ? 'Full name' : "Patient's full name",
+            {
+              required: forSelf ? 'Enter your full name.' : "Enter the patient's full name.",
+              minLength: { value: 2, message: 'Name must be at least 2 characters.' },
+            },
+            { autoComplete: forSelf ? 'name' : 'off' }
+          )}
+
+          {field(
+            'phone',
+            'Phone number',
+            {
+              required: 'Enter a valid phone number, e.g. 0911 234 567.',
+              pattern: {
+                value: /^\+?[0-9\s-]{9,15}$/,
+                message: 'Enter a valid phone number, e.g. 0911 234 567.',
+              },
+            },
+            { type: 'tel', inputMode: 'tel', autoComplete: 'tel', placeholder: '0911 234 567' }
+          )}
+
+          {field(
+            'email',
+            'Email (optional)',
+            {
+              pattern: {
+                value: /^\S+@\S+\.\S+$/,
+                message: 'Enter a valid email address, or leave it empty.',
+              },
+            },
+            { type: 'email', inputMode: 'email', autoComplete: 'email' }
+          )}
+
+          {field(
+            'reason',
+            'Reason for visit',
+            {
+              required: 'Tell the doctor briefly why you are visiting.',
+              minLength: { value: 5, message: 'Tell the doctor briefly why you are visiting.' },
+            },
+            { multiline: true, placeholder: 'For example: recurring headaches for two weeks' }
+          )}
 
           <button type="submit" className="btn btn-primary bk-cta">
             Confirm booking
